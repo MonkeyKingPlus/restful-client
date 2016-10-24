@@ -115,4 +115,22 @@ export default class RESTfulClient {
 			});
 		});
 	}
+
+	get(url, data, dispatch,ops={}) {
+		return this.request({
+			url,
+			data,
+			type: "get",
+			...ops
+		}, dispatch);
+	}
+
+	post(url, data, dispatch,ops={}) {
+		return this.request({
+			url,
+			data,
+			type: "post",
+			...ops
+		}, dispatch);
+	}
 }

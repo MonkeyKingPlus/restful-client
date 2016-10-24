@@ -56,3 +56,7 @@ let rest =new RESTfulClient({
 * requestConf.headers - default({}"),http头信息
 * requestConf.data - 请求的数据
 * dispatch - 如果使用的Redux可以根据需求决定是否传入dispatch.可以不提供.
+
+## get(url[,data,dispatch,ops={}])
+
+## post(url[,data,dispatch,ops={}])
