@@ -10,6 +10,7 @@ export default class RESTfulClient {
 	 * @param {object} ops
 	 * @param {function} [ops.beforeSend=noop]
 	 * @param {function} [ops.sending=noop]
+	 * @param {function} [ops.received=noop]
 	 * @param {function} [ops.success=noop]
 	 * @param {function} [ops.error=noop]
 	 * @param {function} [ops.complete=noop]
@@ -104,7 +105,7 @@ export default class RESTfulClient {
 				this.ops.received(options, response, req, dispatch);
 				if (err) {
 					this.ops.error(err, dispatch);
-					//reject(err);
+					reject(err);
 				}
 				else {
 					this.ops.success(response, dispatch);
