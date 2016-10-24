@@ -17,11 +17,6 @@
     "url": "https://github.com/MonkeyKingPlus/restful-client/issues"
   },
   "homepage": "https://github.com/MonkeyKingPlus/restful-client#readme",
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  },
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
