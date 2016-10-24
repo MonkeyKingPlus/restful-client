@@ -1,5 +1,5 @@
 {
-  "name": "restful-client",
+  "name": "mkp-restful-client",
   "version": "1.0.0",
   "description": "RESTful client",
   "main": "index.js",
