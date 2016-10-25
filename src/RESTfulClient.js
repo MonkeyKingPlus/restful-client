@@ -122,20 +122,20 @@ export default class RESTfulClient {
 	}
 
 	get(url, data, dispatch,ops={}) {
-		return this.request({
+		let conf=Object.assign({
 			url,
 			data,
-			type: "get",
-			...ops
-		}, dispatch);
+			type: "get"
+		},ops);
+		return this.request(conf, dispatch);
 	}
 
 	post(url, data, dispatch,ops={}) {
-		return this.request({
+		let conf=Object.assign({
 			url,
 			data,
-			type: "post",
-			...ops
-		}, dispatch);
+			type: "post"
+		},ops);
+		return this.request(conf, dispatch);
 	}
 }
