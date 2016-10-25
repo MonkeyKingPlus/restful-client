@@ -1,5 +1,5 @@
 # restful-client
-RESTful client . 支持Redux,可以使用在react native , react 等其他JavaScript项目中.
+RESTful client,Redux is supported,you could use it in all of javascript projects especially React and React Native.
 
 # Install
 ```bash
@@ -24,12 +24,12 @@ rest.request({
 ```
 
 # RESTful client Events
-* beforeSend(requestConf[,dispatch]) - 在请求发生之前调用,此事件可以对requestConf进行重写
-* sending(requestConf,xhr[,dispatch]) - 在请求发生时调用.
-* received(requestConf,response,xhr[,dispatch]) - 在请求回来时调用
-* success(response[,dispatch]) - 在请求成功时调用
-* error(err[,dispatch]) - 在请求发生错误时调用
-* complete(requestConf[,dispatch]) - 在请求结束时调用
+* beforeSend(requestConf[,dispatch]) - invoking before request , you can override the request options in this time.
+* sending(requestConf,xhr[,dispatch]) - immediately invoke when the request is sent. 
+* received(requestConf,response,xhr[,dispatch]) - immediately invoke when the response is return.
+* success(response[,dispatch]) - invoking when request is successful.
+* error(err[,dispatch]) - invoking when request error is occurred.
+* complete(requestConf[,dispatch]) - invoking when all of them is done.
 ```javascript
 let rest =new RESTfulClient({
     beforeSend(options, dispatch){
@@ -49,13 +49,13 @@ let rest =new RESTfulClient({
 
 # Methods
 ## request(requestConf[,dispatch])
-方法返回一个Promise对象,如果使用了Redux,根据需要是否传入dispatch.
-* requestConf.url - 请求的url
-* requestConf.type - default("get"),请求的类型
-* requestConf.canAbort - default(false),是否可以被终止
-* requestConf.headers - default({}"),http头信息
-* requestConf.data - 请求的数据
-* dispatch - 如果使用的Redux可以根据需求决定是否传入dispatch.可以不提供.
+the method will return a promise object.
+* requestConf.url - request url
+* requestConf.type - request method , the default value is 'get'.
+* requestConf.canAbort - marking the request whether can be terminated , the default value is false.
+* requestConf.headers - http headers
+* requestConf.data - request data
+* dispatch - you could specify the parameter when redux is available.
 
 ## get(url[,data,dispatch,ops={}])
 
