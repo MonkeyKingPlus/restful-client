@@ -24,12 +24,12 @@ rest.request({
 ```
 
 # RESTful client Events
-* beforeSend(requestConf[,dispatch]) - invoking before request , you can override the request options in this time.
+* beforeSend(requestConf[,dispatch]) - invoke before request , you can override the request options in this time.
 * sending(requestConf,xhr[,dispatch]) - immediately invoke when the request is sent. 
 * received(requestConf,response,xhr[,dispatch]) - immediately invoke when the response is return.
-* success(response[,dispatch]) - invoking when request is successful.
-* error(err[,dispatch]) - invoking when request error is occurred.
-* complete(requestConf[,dispatch]) - invoking when all of them is done.
+* success(response[,dispatch]) - invoke when request is successful.
+* error(err[,dispatch]) - invoke when request error is occurred.
+* complete(requestConf[,dispatch]) - invoke when all of them is done.
 ```javascript
 let rest =new RESTfulClient({
     beforeSend(options, dispatch){
