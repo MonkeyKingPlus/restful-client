@@ -99,7 +99,12 @@ export default class RESTfulClient {
 			let req = agent[options.type](options.url).set(options.headers);
 			this.ops.sending(options, req, dispatch);
 			if (options.data) {
-				req.send(options.data);
+				if(options.type==="get"){
+					req.query(options.data);
+				}
+				else{
+					req.send(options.data);
+				}
 			}
 			req.end((err, response)=> {
 				this.ops.received(options, response, req, dispatch);
