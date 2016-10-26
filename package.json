@@ -1,11 +1,12 @@
 {
   "name": "mkp-restful-client",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "RESTful client",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/babel-cli/bin/babel.js src --out-dir lib"
+    "build": "node_modules/babel-cli/bin/babel.js src --out-dir lib",
+    "publish":"node_modules/babel-cli/bin/babel.js src --out-dir lib && npm publish"
   },
   "repository": {
     "type": "git",
