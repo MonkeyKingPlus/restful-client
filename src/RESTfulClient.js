@@ -92,7 +92,9 @@ export default class RESTfulClient {
 			options.headers = {};
 		}
 		if (options.type === "post") {
-			options.headers["content-type"] = "application/json;charset=utf-8";
+			if(!options.headers["content-type"]) {
+				options.headers["content-type"] = "application/json;charset=utf-8";
+			}
 		}
 		this.ops.beforeSend(options, dispatch);
 		return new Promise((resolve, reject)=> {
