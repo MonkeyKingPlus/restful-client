@@ -33,16 +33,27 @@ rest.request({
 ```javascript
 let rest =new RESTfulClient({
     beforeSend(options, dispatch){
+    	//you could override the opstions
+    	//such as combine url
+    	//options.url=host+options.url;
+    	//do somethings
     },
     sending(options, xhr, dispatch){
+    	//you could show a loading or store xhr and so on
+    	//do somethings
     },
     received(options, response, xhr, dispatch){
+    	//if show a loading at sending , you must remove that in here.
+    	//do somethings
     },
     success(response, dispatch){
+    	//do somethings
     },
     error(err, dispatch){
+    	//do somethings
     },
     complete(options, dispatch){
+    	//do somethings
     }
 })
 ```
