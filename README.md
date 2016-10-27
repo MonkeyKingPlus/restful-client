@@ -1,5 +1,5 @@
 # restful-client
-RESTful client,Redux is supported,you could use it in all of javascript projects especially React and React Native.
+RESTful client with javascript,Redux is supported,you could use it in all of javascript projects especially React and React Native.
 
 # Install
 ```bash
@@ -8,14 +8,14 @@ $ npm install mkp-restful-client --save
 
 # Quick Start
 ```javascript
-//引用RESTful client
+//import RESTful client
 import RESTfulClient from "mkp-restful-client";
-//初始化RESTful client
+//initial RESTful client
 let rest=new RESTfulClient();
 
 window.$rest=rest;
 
-//request json
+//request a json
 rest.request({
     url:"https://api.github.com/users/mralexgray/repos"
 }).then(response=>{

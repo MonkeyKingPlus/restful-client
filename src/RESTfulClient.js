@@ -18,15 +18,14 @@ export default class RESTfulClient {
 	constructor(ops = {}) {
 		this.ops = Object.assign({
 			/**
-			 * It is calling before send. you can overwrite request options in this time.
-			 * @param {object} options - options is ref request options
+			 * invoke before send. you can overwrite request options in this time.
+			 * @param {object} options - options is request options , you can be overridden
 			 * @param {function} dispatch
 			 * */
 			beforeSend(options, dispatch){
 			},
 			/**
-			 * It is fired when request is sending.
-			 * the beginRequest action is invoked by default and the parameter dispatch is provided.
+			 * invoke when request is sending.
 			 * @param {object} options - request options
 			 * @param {XMLHttpRequest} xhr
 			 * @param {function} dispatch
@@ -34,8 +33,7 @@ export default class RESTfulClient {
 			sending(options, xhr, dispatch){
 			},
 			/**
-			 * It is fired when response is received right now.
-			 * the endRequest action is invoked by default and the parameter dispatch is provided.
+			 * immediately invoke when response is received.
 			 * @param {object} options - request options
 			 * @param {object} response
 			 * @param {XMLHttpRequest} xhr
@@ -44,22 +42,22 @@ export default class RESTfulClient {
 			received(options, response, xhr, dispatch){
 			},
 			/**
-			 * It is fired when the request have any error.
+			 * invoke when the request is success.
 			 * @param {object} response
 			 * @param {funciton} dispatch
 			 * */
 			success(response, dispatch){
 			},
 			/**
-			 * It is fired when error occur
+			 * invoke when the request occur a error
 			 * @param {object} err
 			 * @param {function} dispatch
 			 * */
 			error(err, dispatch){
 			},
 			/**
-			 * It is fired when all is done
-			 * @param {object} options - current request options
+			 * invoke when all of them is done.
+			 * @param {object} options - request options
 			 * @param {function} dispatch
 			 * */
 			complete(options, dispatch){
@@ -70,24 +68,20 @@ export default class RESTfulClient {
 	/**
 	 * request
 	 * @param {object} conf - request options
-	 * @param {string} conf.url - url is required
-	 * @param {string} [conf.type=get] - request method
-	 * @param {boolean} [conf.canAbort=false] - marking the request can be terminated.
-	 * @param {object} [headers={}] - http headers, default content-type's value will be set to "application/json;utf-8" when conf.type is post
+	 * @param {string} conf.url
+	 * @param {string} [conf.type=get]
+	 * @param {object} [headers={}] - http headers, default content-type's value will be set to "application/json;charset=utf-8" when conf.type is post
 	 * @param {object} conf.data - request data
 	 * @param {function} dispatch - optional , if you provide the parameter dispatch , you can know the network status from network status reducer.
 	 * */
 	request(conf, dispatch) {
-		let options = Object.assign({
-			canAbort: false
-		}, conf);
+		let options = Object.assign({}, conf);
 		if (!options.type) {
 			options.type = "get";
 		}
 		else {
 			options.type = options.type.toLowerCase();
 		}
-		// options.url = `${$config.APIHost}${conf.url}`;
 		if (!options.headers) {
 			options.headers = {};
 		}
