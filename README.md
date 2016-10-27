@@ -47,6 +47,12 @@ let rest =new RESTfulClient({
     	//do somethings
     },
     success(response, dispatch){
+    	//how to read response header's values?
+    	//example:
+    	//response.header["HEADER_NAME"]
+    	//in addtion you can read response.text , response.body and so on.
+    	//you can inspect these property through console.
+    	
     	//do somethings
     },
     error(err, dispatch){
