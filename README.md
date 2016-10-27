@@ -69,7 +69,6 @@ let rest =new RESTfulClient({
 the method will return a promise object.
 * requestConf.url - request url
 * requestConf.type - request method , the default value is 'get'.
-* requestConf.canAbort - marking the request whether can be terminated , the default value is false.
 * requestConf.headers - http headers
 * requestConf.data - request data
 * dispatch - you could specify the parameter when redux is available.
