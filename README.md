@@ -1,4 +1,12 @@
 # restful-client
+
+<!-- badge -->
+[![npm version](https://img.shields.io/npm/v/mkp-restful-client.svg)](https://www.npmjs.com/package/mkp-restful-client)
+[![npm license](https://img.shields.io/npm/l/mkp-restful-client.svg)](https://www.npmjs.com/package/mkp-restful-client)
+[![npm download](https://img.shields.io/npm/dm/mkp-restful-client.svg)](https://www.npmjs.com/package/mkp-restful-client)
+[![npm download](https://img.shields.io/npm/dt/mkp-restful-client.svg)](https://www.npmjs.com/package/mkp-restful-client)
+<!-- endbadge -->
+
 RESTful client with javascript,Redux is supported,you could use it in all of javascript projects especially React and React Native.
 
 # Install
