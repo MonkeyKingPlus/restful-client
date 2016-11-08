@@ -19,6 +19,7 @@ $ npm install mkp-restful-client --save
 //import RESTful client
 import RESTfulClient from "mkp-restful-client";
 //initial RESTful client
+//default client is fetch
 let rest=new RESTfulClient();
 
 window.$rest=rest;
@@ -29,6 +30,31 @@ rest.request({
 }).then(response=>{
     console.log(response);
 })
+```
+
+# Client
+There have two client fetch and superagent , fetch is default client.
+```javascript
+let rest=new RESTfulClient();
+```
+or
+```javascript
+let rest=new RESTfulClient({
+	clientEngine:{
+		name:"fetch",
+		client:fetch
+	}
+});
+```
+code with superagent following
+```javascript
+import superagent from "superagent";
+let rest=new RESTfulClient({
+	clientEngine:{
+		name:"superagent",
+		client:superagent
+	}
+});
 ```
 
 # RESTful client Events
