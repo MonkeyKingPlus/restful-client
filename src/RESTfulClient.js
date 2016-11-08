@@ -5,16 +5,6 @@ type requestOption={
 	headers:Object
 };
 
-function formatRequestOption(clientName:String,requestOption:requestOption){
-	switch (clientName.toLowerCase()){
-		case "fetch":
-			requestOption.type=requestOption.type.toUpperCase();
-
-		default:
-			return requestOption;
-	}
-}
-
 function fetchRequest(client:RESTfulClient,options:requestOption,dispatch:Function){
 	let fetchOptions={
 		method:options.type.toUpperCase()
@@ -82,6 +72,9 @@ export default class RESTfulClient {
 	 * @param {function} [ops.complete=noop]
 	 * */
 	constructor(ops = {}) {
+		if(!ops.clientEngine){
+			throw new Error("Please provide a client engine . such as fetch or superagent");
+		}
 		this.ops = Object.assign({
 			/**
 			 * invoke before send. you can overwrite request options in this time.
@@ -128,11 +121,17 @@ export default class RESTfulClient {
 			 * */
 			complete(options, dispatch){
 			},
-			clientEngine:{
+			// clientEngine:{
+			// 	name:"unknown",
+			// 	client:()=>null
+			// }
+		}, ops);
+		if(!ops.clientEngine){
+			ops.clientEngine={
 				name:"fetch",
 				client:fetch
-			}
-		}, ops);
+			};
+		}
 	}
 
 	/**
