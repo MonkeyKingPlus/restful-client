@@ -20,6 +20,10 @@ function fetchRequest(client:RESTfulClient,options:requestOption,dispatch:Functi
 		client.ops.received(options, res, null, dispatch);
 		client.ops.success(res, dispatch);
 		client.ops.complete(options, dispatch);
+
+		if(client.ops.normalizeResponse){
+			return client.ops.normalizeResponse(res);
+		}
 		return res;
 	}).catch(ex=>{
 		client.ops.error(ex,dispatch);
@@ -49,6 +53,17 @@ function superagentRequest(client:RESTfulClient,options:requestOption,dispatch:F
 			}
 			else {
 				client.ops.success(response, dispatch);
+				if(client.ops.normalizeResponse){
+					let result= client.ops.normalizeResponse(response);
+					if(result.then){
+						result.then(res=>{
+							resolve(res);
+						});
+					}
+					else{
+						resolve(result);
+					}
+				}
 				resolve(response);
 			}
 			client.ops.complete(options, dispatch);
@@ -76,6 +91,7 @@ export default class RESTfulClient {
 			throw new Error("Please provide a client engine . such as fetch or superagent");
 		}
 		this.ops = Object.assign({
+			normalizeResponse:null,
 			/**
 			 * invoke before send. you can overwrite request options in this time.
 			 * @param {object} options - options is request options , you can be overridden

@@ -64,8 +64,21 @@ let rest=new RESTfulClient({
 * success(response[,dispatch]) - invoke when request is successful.
 * error(err[,dispatch]) - invoke when request error is occurred.
 * complete(requestConf[,dispatch]) - invoke when all of them is done.
+* normalizeResponse(response) - normalize response
 ```javascript
 let rest =new RESTfulClient({
+	normalizeResponse(response){
+		//you can override response 
+		
+		//example
+		//return response.json().then(json=>{
+		//	response.body=json;
+		//	return response;
+		//});
+		//or
+		//response.data=response.body.Data;
+		//return response;
+	},
     beforeSend(options, dispatch){
     	//you could override the opstions
     	//such as combine url
