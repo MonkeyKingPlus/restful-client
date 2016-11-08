@@ -1,4 +1,70 @@
-import agent from "superagent";
+type requestOption={
+	type:String,
+	data:Object,
+	url:String,
+	headers:Object
+};
+
+function formatRequestOption(clientName:String,requestOption:requestOption){
+	switch (clientName.toLowerCase()){
+		case "fetch":
+			requestOption.type=requestOption.type.toUpperCase();
+
+		default:
+			return requestOption;
+	}
+}
+
+function fetchRequest(client:RESTfulClient,options:requestOption,dispatch:Function){
+	let fetchOptions={
+		method:options.type.toUpperCase()
+	};
+	if(options.headers){
+		fetchOptions.headers=options.headers;
+	}
+	if(options.data){
+		fetchOptions.body=JSON.stringify(options.data);
+	}
+	client.ops.sending();
+	return client.ops.clientEngine.client(options.url,fetchOptions).then(res=>{
+		client.ops.received(options, res, null, dispatch);
+		client.ops.success(res, dispatch);
+		client.ops.complete(options, dispatch);
+		return res;
+	}).catch(ex=>{
+		client.ops.error(ex,dispatch);
+	});
+}
+
+function superagentRequest(client:RESTfulClient,options:requestOption,dispatch:Function){
+	return new Promise((resolve,reject)=>{
+		let req=client.ops.clientEngine.client[options.type.toLowerCase()](options.url);
+		if(options.headers) {
+			req.set(options.headers);
+		}
+		if (options.data) {
+			if(options.type.toLowerCase()==="get"){
+				req.query(options.data);
+			}
+			else{
+				req.send(options.data);
+			}
+		}
+		client.ops.sending(options, req, dispatch);
+		req.end((err, response)=> {
+			client.ops.received(options, response, req, dispatch);
+			if (err) {
+				client.ops.error(err, dispatch);
+				reject(err);
+			}
+			else {
+				client.ops.success(response, dispatch);
+				resolve(response);
+			}
+			client.ops.complete(options, dispatch);
+		});
+	})
+}
 
 /**
  * RESTful client
@@ -61,8 +127,12 @@ export default class RESTfulClient {
 			 * @param {function} dispatch
 			 * */
 			complete(options, dispatch){
+			},
+			clientEngine:{
+				name:"fetch",
+				client:fetch
 			}
-		}, ops)
+		}, ops);
 	}
 
 	/**
@@ -79,42 +149,14 @@ export default class RESTfulClient {
 		if (!options.type) {
 			options.type = "get";
 		}
-		else {
-			options.type = options.type.toLowerCase();
-		}
-		if (!options.headers) {
-			options.headers = {};
-		}
-		if (options.type === "post") {
-			if(!options.headers["content-type"]) {
-				options.headers["content-type"] = "application/json;charset=utf-8";
-			}
-		}
 		this.ops.beforeSend(options, dispatch);
-		return new Promise((resolve, reject)=> {
-			let req = agent[options.type](options.url).set(options.headers);
-			this.ops.sending(options, req, dispatch);
-			if (options.data) {
-				if(options.type==="get"){
-					req.query(options.data);
-				}
-				else{
-					req.send(options.data);
-				}
-			}
-			req.end((err, response)=> {
-				this.ops.received(options, response, req, dispatch);
-				if (err) {
-					this.ops.error(err, dispatch);
-					reject(err);
-				}
-				else {
-					this.ops.success(response, dispatch);
-					resolve(response);
-				}
-				this.ops.complete(options, dispatch);
-			});
-		});
+		switch (this.ops.clientEngine.name.toLowerCase()){
+			case "superagent":
+				return superagentRequest(this,options,dispatch);
+			case "fetch":
+			default:
+				return fetchRequest(this,options,dispatch);
+		}
 	}
 
 	get(url, data, dispatch,ops={}) {
